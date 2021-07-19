@@ -417,12 +417,20 @@ class CalendarDay extends Component {
       //If it is border, the user has to input color for border animation
       switch (daySelectionAnimation.type) {
         case "background":
-          _dateViewStyle.push({ backgroundColor: daySelectionAnimation.highlightColor });
+          _dateViewStyle.push({ 
+          
+            // flex: 1,
+            // padding:3,
+            backgroundColor:"black",
+
+            borderRadius:4
+          
+          });
           break;
         case "border":
           _dateViewStyle.push({
-            borderColor: daySelectionAnimation.borderHighlightColor,
-            borderWidth: daySelectionAnimation.borderWidth
+            // borderColor: daySelectionAnimation.borderHighlightColor,
+            // borderWidth: daySelectionAnimation.borderWidth
           });
           break;
         default:
@@ -465,6 +473,7 @@ class CalendarDay extends Component {
       borderRadius: containerBorderRadius,
     };
 
+    console.log(`selected`,selected)
     let day;
     if (DayComponent) {
       day = (<DayComponent {...this.props} {...this.state}/>);
@@ -476,12 +485,23 @@ class CalendarDay extends Component {
           disabled={!enabled}
         >
           <View
-            style={[
-              styles.dateContainer,
-              responsiveDateContainerStyle,
+            style={selected ? [
               _dateViewStyle,
-              dayContainerStyle
-            ]}
+              {
+                margin:3,
+              }
+              // dayContainerStyle
+            ]: [ 
+              {
+                backgroundColor:"rgba(226,144,1,0.35)",
+                padding:3,
+          borderRadius:4,
+          
+              }
+              // styles.dateContainer,
+              // responsiveDateContainerStyle,
+              // _dateViewStyle,
+              ]}
           >
             {showDayName && (
               <Text
