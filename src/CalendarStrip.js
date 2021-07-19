@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Animated, PixelRatio } from "react-native";
+import { View, Animated, PixelRatio,ScrollView } from "react-native";
 
 import moment from "moment";
 
@@ -169,7 +169,7 @@ class CalendarStrip extends Component {
     {
       // Protect against undefined startingDate prop
       let _startingDate = this.props.startingDate || this.state.startingDate;
-
+      
       startingDate = { startingDate: this.setLocale(_startingDate)};
       selectedDate = { selectedDate: this.setLocale(this.props.selectedDate)};
       days = this.createDays(startingDate.startingDate, selectedDate.selectedDate);
@@ -306,13 +306,13 @@ class CalendarStrip extends Component {
         ...this.createDays(this.state.startingDate, selectedDate),
       };
     }
-    this.setState(() => newState);
+    this.setState(newState);
     const _selectedDate = selectedDate && selectedDate.clone();
     this.props.onDateSelected && this.props.onDateSelected(_selectedDate);
   }
 
   // Get the currently selected date (Moment JS object)
-  getSelectedDate = () => {
+  getSelectedDate = date => {
     if (!this.state.selectedDate || this.state.selectedDate.valueOf() === 0) {
       return; // undefined (no date has been selected yet)
     }
@@ -589,7 +589,8 @@ class CalendarStrip extends Component {
           }
 
           <View style={styles.datesStrip}>
-            <WeekSelector
+            {/* <ScrollView horizontal> */}
+            {/* <WeekSelector
               controlDate={this.props.minDate}
               iconComponent={this.props.leftSelector}
               iconContainerStyle={this.props.iconContainer}
@@ -600,7 +601,7 @@ class CalendarStrip extends Component {
               weekStartDate={this.state.weekStartDate}
               weekEndDate={this.state.weekEndDate}
               size={this.state.selectorSize}
-            />
+            /> */}
 
             <View onLayout={this.onLayout} style={styles.calendarDates}>
               {this.props.showDate ? (
@@ -610,7 +611,7 @@ class CalendarStrip extends Component {
               )}
             </View>
 
-            <WeekSelector
+            {/* <WeekSelector
               controlDate={this.props.maxDate}
               iconComponent={this.props.rightSelector}
               iconContainerStyle={this.props.iconContainer}
@@ -621,7 +622,8 @@ class CalendarStrip extends Component {
               weekStartDate={this.state.weekStartDate}
               weekEndDate={this.state.weekEndDate}
               size={this.state.selectorSize}
-            />
+            /> */}
+            {/* </ScrollView> */}
           </View>
 
           {this.props.showDate && this.props.calendarHeaderPosition === "below" &&
