@@ -38,8 +38,6 @@ export default StyleSheet.create({
   //CALENDAR DAY
   dateRootContainer: {
     flex: 1,
-    padding:3,
-    backgroundColor:"rgba(226,144,1,0.35)",
     margin:3,
     borderRadius:4
   },
