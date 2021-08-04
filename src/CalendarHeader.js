@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Text, TouchableOpacity } from "react-native";
-
-import styles from "./Calendar.style.js";
-
+import { Text, TouchableOpacity, } from "react-native";
+import { View } from "react-native-animatable";
+import moment from "moment";
 class CalendarHeader extends Component {
   static propTypes = {
     calendarHeaderFormat: PropTypes.string.isRequired,
@@ -29,46 +28,38 @@ class CalendarHeader extends Component {
 
   //Function that formats the calendar header
   //It also formats the month section if the week is in between months
-  formatCalendarHeader(calendarHeaderFormat) {
+  formatCalendarHeader(calendarHeaderFormat,index) {
     if (!this.props.weekStartDate || !this.props.weekEndDate) {
-      return "";
+      return null;
     }
 
     const firstDay = this.props.weekStartDate;
-    const lastDay = this.props.weekEndDate;
-    let monthFormatting = "";
-    //Parsing the month part of the user defined formating
-    if ((calendarHeaderFormat.match(/Mo/g) || []).length > 0) {
-      monthFormatting = "Mo";
-    } else {
-      if ((calendarHeaderFormat.match(/M/g) || []).length > 0) {
-        for (
-          let i = (calendarHeaderFormat.match(/M/g) || []).length;
-          i > 0;
-          i--
-        ) {
-          monthFormatting += "M";
-        }
-      }
-    }
-
-    if (firstDay.month() === lastDay.month()) {
-      return firstDay.format(calendarHeaderFormat);
-    } else if (firstDay.year() !== lastDay.year()) {
-      return `${firstDay.format(calendarHeaderFormat)} / ${lastDay.format(
-        calendarHeaderFormat
-      )}`;
-    }
-
-    return `${
-      monthFormatting.length > 1 ? firstDay.format(monthFormatting) : ""
-    } ${monthFormatting.length > 1 ? "/" : ""} ${lastDay.format(
-      calendarHeaderFormat
-    )}`;
+    let month = moment(firstDay).month()
+    return  <TouchableOpacity key={index} onPress={()=>this.props.onDateSelected(moment().date(1).month(month).add(index, 'months'))}>
+    <View style={{flexDirection:"row",alignItems:"center"}}>
+     {index==0 && <View style={{
+        width:5,
+        height:5,
+        backgroundColor:'black',
+        borderRadius:5,
+        
+      }} />}
+      <View style={{
+        paddingLeft:3
+      }}>
+      <Text style={{
+        fontSize:16,
+        fontFamily:"Avenir-Heavy",
+        color:index==0?"black":"white"
+      }}>{moment().month(month).add(index, 'months').format("MMM")}</Text>
+      </View>
+    </View></TouchableOpacity>
+    
   }
 
-  render() {
-    const {
+
+  render(){
+        const {
       calendarHeaderFormat,
       onHeaderSelected,
       calendarHeaderContainerStyle,
@@ -79,29 +70,15 @@ class CalendarHeader extends Component {
       weekEndDate: _weekEndDate,
       headerText,
     } = this.props;
-    const _headerText = headerText || this.formatCalendarHeader(calendarHeaderFormat);
-    const weekStartDate = _weekStartDate && _weekStartDate.clone();
-    const weekEndDate = _weekEndDate && _weekEndDate.clone();
-
-    return (
-      <TouchableOpacity
-        onPress={onHeaderSelected && onHeaderSelected.bind(this, {weekStartDate, weekEndDate})}
-        disabled={!onHeaderSelected}
-        style={calendarHeaderContainerStyle}
-      >
-        <Text
-          style={[
-            styles.calendarHeader,
-            { fontSize: fontSize },
-            calendarHeaderStyle
-          ]}
-          allowFontScaling={allowHeaderTextScaling}
-        >
-          {_headerText}
-        </Text>
-      </TouchableOpacity>
-    );
+    const _headerText = this.formatCalendarHeader(calendarHeaderFormat);
+    
+    return <View style={{flexDirection:"row",justifyContent:"space-between",paddingHorizontal:16}}>
+      {[0,1,2,3,4].map((item)=>this.formatCalendarHeader(calendarHeaderFormat,item))}
+     
+    </View>
   }
+
+  
 }
 
 export default CalendarHeader;
