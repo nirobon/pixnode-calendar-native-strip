@@ -321,6 +321,7 @@ class CalendarStrip extends Component {
 
   // Set the selected date.  To clear the currently selected date, pass in 0.
   setSelectedDate = date => {
+    console.log(`setSelectedDate`,date)
     let mDate = moment(date);
     this.onDateSelected(mDate);
     if (this.props.scrollToOnSetSelectedDate) {
@@ -331,6 +332,14 @@ class CalendarStrip extends Component {
     }
   }
 
+  setHeaderSelectDate=(date)=>{
+
+    let mDate = moment(date);
+    
+    
+      this.scroller.scrollToDate(date);
+    
+  }
   // Gather animations from each day. Sequence animations must be started
   // together to work around bug in RN Animated with individual starts.
   registerAnimation = animation => {
@@ -543,6 +552,7 @@ class CalendarStrip extends Component {
         fontSize={this.state.monthFontSize}
         allowHeaderTextScaling={this.props.shouldAllowFontScaling}
         headerText={this.props.headerText}
+        onDateSelected={(date)=>this.setHeaderSelectDate(date)}
       />
     );
   }
