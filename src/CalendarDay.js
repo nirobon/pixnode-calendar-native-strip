@@ -406,7 +406,7 @@ class CalendarDay extends Component {
     if (customStyle) {
       _dateNameStyle.push(customStyle.dateNameStyle);
       _dateNumberStyle.push(customStyle.dateNumberStyle);
-      _dateViewStyle.push(customStyle.dateContainerStyle);
+      // _dateViewStyle.push(customStyle.dateContainerStyle);
       _customHighlightDateNameStyle = customStyle.highlightDateNameStyle;
       _customHighlightDateNumberStyle = customStyle.highlightDateNumberStyle;
     }
@@ -488,7 +488,8 @@ class CalendarDay extends Component {
             style={selected ? [
               _dateViewStyle,
               {
-                margin:3,
+                // margin:3,
+                padding:3,
               }
               // dayContainerStyle
             ]: [ 
