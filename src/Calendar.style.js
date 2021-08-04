@@ -13,7 +13,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginHorizontal:12
   },
   calendarDates: {
     flex: 1,
@@ -37,14 +38,19 @@ export default StyleSheet.create({
 
   //CALENDAR DAY
   dateRootContainer: {
-    flex: 1,
+    // flex: 1,
+    // padding:3,
+    // backgroundColor:"rgba(226,144,1,0.35)",
     margin:3,
-    borderRadius:4
+    borderRadius:4,
+    // width:64,
+    
   },
   dateContainer: {
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "center",
+    
   },
   dateName: {
     textAlign: "center"
